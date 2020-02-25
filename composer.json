@@ -1,2 +1,6 @@
 {
+    "name": "ianleckey/epics-php",
+    "require": {
+        "symfony/http-client": "5.0.*"
+    }
 }
