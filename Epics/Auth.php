@@ -16,8 +16,8 @@ class Auth {
 		$response = $client->request('POST', EPICS__API_ENDPOINT . $this->loginPath, [
 							'headers' => EPICS__HTTP_HEADERS,
 							'json' => [
-								'email' => $username,
-								'password' => $password
+								'email' => (string)$username,
+								'password' => (string)$password
 							]
 						]);
 
@@ -26,7 +26,7 @@ class Auth {
 			if($decodedPayload['success']) {
 				$this->loggedIn = true;
 				$this->jwt = $decodedPayload['data']['jwt'];
-				$this->userId = $decodedPayload['data']['user']['id'];
+				$this->userId = (int)$decodedPayload['data']['user']['id'];
 			}
 		}
 
