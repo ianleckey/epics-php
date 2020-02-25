@@ -1,6 +1,13 @@
 {
     "name": "ianleckey/epics-php",
+    "autoload": {
+        "psr-4": {"Epics\\": "Epics/"},
+        "files": [
+        	"Epics/Constants.php"
+        ]
+    },
     "require": {
-        "symfony/http-client": "5.0.*"
+        "symfony/http-client": "5.0.*",
+        "symfony/cache": "^5.0"
     }
 }
