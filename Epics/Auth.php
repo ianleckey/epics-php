@@ -5,6 +5,7 @@ namespace Epics;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Component\ErrorHandler\ErrorHandler;
 
 class Auth {
 
@@ -32,9 +33,7 @@ class Auth {
 							]);
 			
 			if($response->getStatusCode() == 200) {
-
 				$decodedPayload = $response->toArray();	
-
 				if($decodedPayload['success']) {
 					$this->loggedIn = true;
 					$this->user = new User((int)$decodedPayload['data']['user']['id']);
@@ -42,7 +41,11 @@ class Auth {
 					$jwt->expiresAfter($decodedPayload['data']['expires'] - time());
 					$jwt->set($decodedPayload['data']['jwt']);
 					$cache->save($jwt);
+				} else {
+					throw new \RuntimeException('[Epics] Authentication failed. Check credentials.');
 				}
+			} else {
+				throw new \RuntimeException('[HTTP '.$response->getStatusCode().'] Error obtaining response from: ' . self::$endpoint);
 			}
 		}
 
@@ -52,7 +55,7 @@ class Auth {
 
 	public function clearJWT() {
 		$cache = new FilesystemAdapter();
-		
+		$cache->deleteItem('jwt');
 	}
 
 
