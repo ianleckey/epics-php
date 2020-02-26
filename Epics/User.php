@@ -1,5 +1,5 @@
 <?php
-
+namespace Epics;
 class User {
 
 
@@ -12,7 +12,7 @@ class User {
 
 
 	public function __construct(int $id) {
-
+		$this->id = $id;
 	}
 
 
