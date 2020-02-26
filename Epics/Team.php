@@ -52,11 +52,11 @@ class Team {
 	}
 
 	public static function getAllTeams() {
-		global $auth;
 		
 		$client = HttpClient::create();
 		$headers = EPICS__HTTP_HEADERS;
-		$headers['X-User-JWT'] = $auth->jwt;
+		$cache = new FilesystemAdapter('epics', 0, './cache/');
+		$headers['X-User-JWT'] = $cache->getItem('jwt')->get();
 		$response = $client->request('GET', self::$endpoint, [ 
 						'headers' => $headers,
 						'query' => [
