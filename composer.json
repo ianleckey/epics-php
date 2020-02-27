@@ -1,5 +1,7 @@
 {
     "name": "ianleckey/epics-php",
+    "description": "PHP library for Epics.gg",
+    "license": "GPL-3.0-only",
     "autoload": {
         "psr-4": {"Epics\\": "Epics/"},
         "files": [
