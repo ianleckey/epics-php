@@ -1,23 +1,17 @@
 <?php 
-namespace Epics;
+namespace Epics\Entity;
 use Epics\Image;
 use Epics\Cache;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\Cache\ItemInterface;
 
 
-class Team {
+class Team extends Entity {
 	
 	protected static $endpoint = EPICS__API_ENDPOINT . 'teams';
 
-	public $id;
-	public $country;
-	public $name;
-	public $active;
-	protected $images;
 	public $shortName;
 	public $manager;
-	public $dob;
 	protected $playerIds;
 
 	public function __construct(int $id = 0) {
@@ -25,8 +19,8 @@ class Team {
 
 			$cache = new Cache();
 			$teams = $cache->pool->getItem('teams');
+
 			if(!$teams->isHit()) {
-				$teams->expiresAfter($cache->expires);
 				$teams->set($this->getAllTeams());
 				$cache->pool->save($teams);
 			}
@@ -50,7 +44,7 @@ class Team {
 		}
 	}
 
-	private function setImages($images) {
+	protected function setImages(array $images) : array {
 		$imagesArr = [];
 		foreach($images as $image) {
 			$imagesArr[] = new Image($image);
@@ -58,7 +52,7 @@ class Team {
 		return $imagesArr;
 	}
 
-	public static function getAllTeams() {
+	public static function getAllTeams() : array {
 		
 		$client = HttpClient::create();
 		$headers = EPICS__HTTP_HEADERS;

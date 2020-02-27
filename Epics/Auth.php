@@ -16,7 +16,7 @@ class Auth {
 	protected $user;	
 	protected $expires;
 
-	public function __construct($username = '', $password = '', $forceNewJwt = false) {
+	public function __construct(string $username = '', string $password = '', bool $forceNewJwt = false) {
 		$this->loggedIn = true;
 		
 		$cache = new Cache();
