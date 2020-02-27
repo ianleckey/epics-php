@@ -26,13 +26,12 @@ class Team {
 			$cache = new Cache();
 			$teams = $cache->pool->getItem('teams');
 			if(!$teams->isHit()) {
-				$teams->expiresAfter(Cache::$expires);
+				$teams->expiresAfter($cache->expires);
 				$teams->set($this->getAllTeams());
 				$cache->pool->save($teams);
 			}
 			
 			$allTeams = $teams->get();
-
 
 			foreach($allTeams as $team) {
 				if($team['id'] === $id) {
@@ -47,6 +46,7 @@ class Team {
 					break;
 				}
 			}
+
 		}
 	}
 
@@ -62,8 +62,8 @@ class Team {
 		
 		$client = HttpClient::create();
 		$headers = EPICS__HTTP_HEADERS;
-		$cache = new FilesystemAdapter('epics', 0, './cache/');
-		$headers['X-User-JWT'] = $cache->getItem('jwt')->get();
+		$cache = new Cache();
+		$headers['X-User-JWT'] = $cache->get('jwt');
 		$response = $client->request('GET', self::$endpoint, [ 
 						'headers' => $headers,
 						'query' => [
