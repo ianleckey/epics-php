@@ -16,12 +16,12 @@ class Auth {
 	protected $user;	
 	protected $expires;
 
-	public function __construct($username = '', $password = '') {
+	public function __construct($username = '', $password = '', $forceNewJwt = false) {
 		$this->loggedIn = true;
 		$cache = new FilesystemAdapter('epics', 0, './cache/');
 		$jwt = $cache->getItem('jwt');
 
-		if(!$jwt->isHit()) {
+		if(!$jwt->isHit() || $forceNewJwt) {
 			$this->loggedIn = false;
 			$client = HttpClient::create();
 			$response = $client->request('POST', self::$endpoint, [
@@ -40,17 +40,13 @@ class Auth {
 					$jwt->expiresAfter($decodedPayload['data']['expires'] - time());
 					$jwt->set($decodedPayload['data']['jwt']);
 					$cache->save($jwt);
-				} else {
-					throw new \RuntimeException('[Epics] Authentication failed. Check credentials.');
 				}
-			} else {
-				throw new \RuntimeException('[HTTP '.$response->getStatusCode().'] Error obtaining response from: ' . self::$endpoint);
 			}
 		}
 
 	}
 
-	public function clearJWT() {
+	public static function clearJWT() {
 		$cache = new FilesystemAdapter();
 		$cache->deleteItem('jwt');
 	}
