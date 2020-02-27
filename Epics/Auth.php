@@ -1,7 +1,7 @@
 <?php 
 
 namespace Epics;
-
+use Epics\Cache;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -18,8 +18,9 @@ class Auth {
 
 	public function __construct($username = '', $password = '', $forceNewJwt = false) {
 		$this->loggedIn = true;
-		$cache = new FilesystemAdapter('epics', 0, './cache/');
-		$jwt = $cache->getItem('jwt');
+		
+		$cache = new Cache();
+		$jwt = $cache->pool->getItem('jwt');
 
 		if(!$jwt->isHit() || $forceNewJwt) {
 			$this->loggedIn = false;
@@ -39,17 +40,11 @@ class Auth {
 					$this->expires = $decodedPayload['data']['expires'];
 					$jwt->expiresAfter($decodedPayload['data']['expires'] - time());
 					$jwt->set($decodedPayload['data']['jwt']);
-					$cache->save($jwt);
+					$cache->pool->save($jwt);
 				}
 			}
 		}
 
 	}
-
-	public static function clearJWT() {
-		$cache = new FilesystemAdapter();
-		$cache->deleteItem('jwt');
-	}
-
 
 }
