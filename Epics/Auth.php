@@ -11,10 +11,9 @@ class Auth {
 
 	protected static $endpoint = EPICS__API_ENDPOINT . 'auth/login?categoryId=1&gameId=1';
 	
-	public $jwt;
+	public $loggedIn;
 
 	protected $user;	
-	protected $loggedIn;
 	protected $expires;
 
 	public function __construct($username = '', $password = '') {
@@ -48,8 +47,6 @@ class Auth {
 				throw new \RuntimeException('[HTTP '.$response->getStatusCode().'] Error obtaining response from: ' . self::$endpoint);
 			}
 		}
-
-		$this->jwt = $jwt->get();
 
 	}
 
