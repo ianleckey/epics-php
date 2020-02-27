@@ -1,3 +1,5 @@
+![PHP Composer](https://github.com/ianleckey/epics-php/workflows/PHP%20Composer/badge.svg)
+
 # epics-php
 
 ## Installation
