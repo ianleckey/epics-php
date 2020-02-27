@@ -5,11 +5,10 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class Cache {
 	
-	public $expires = 86400;
 	public $pool;
 	protected static $poolNamespace = 'epics';
 	protected static $poolDir = './cache/';
-	protected static $poolDefaultExpires = 0;
+	protected static $poolDefaultExpires = 86400;
 
 	public function __construct() {
 		$this->pool = new FilesystemAdapter(self::$poolNamespace, self::$poolDefaultExpires, self::$poolDir);
@@ -22,6 +21,7 @@ class Cache {
 		} else {
 			$this->pool->deleteItem('jwt');
 			$this->pool->deleteItem('teams');
+			$this->pool->deleteItem('players');
 		}
 		
 	}

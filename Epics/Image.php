@@ -66,7 +66,7 @@ class Image {
 		$this->id = (int)$id; 
 	}
 
-	private function setUrl($url) {
+	private function setUrl(string $url) {
 		$this->url = self::$cdnUrl . $url;
 	}
 
