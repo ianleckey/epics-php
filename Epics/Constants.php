@@ -1,8 +1,5 @@
 <?php
 
-const EPICS__CACHING = true;
-const EPICS__CACHE_EXPIRES = 86400; // 1 day
-
 const EPICS__API_ENDPOINT = 'https://api.epics.gg/api/v1/';
 
 const EPICS__HTTP_REFERER = 'https://app.epics.gg';

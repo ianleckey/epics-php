@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "030479ce2655299c9dab28d5037ed935",
+    "content-hash": "f8eecd9e0426074754a555aee2c2c597",
     "packages": [
         {
             "name": "psr/cache",
@@ -464,6 +464,60 @@
                 "standards"
             ],
             "time": "2019-11-26T23:25:11+00:00"
+        },
+        {
+            "name": "symfony/options-resolver",
+            "version": "v5.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/options-resolver.git",
+                "reference": "b1ab86ce52b0c0abe031367a173005a025e30e04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/b1ab86ce52b0c0abe031367a173005a025e30e04",
+                "reference": "b1ab86ce52b0c0abe031367a173005a025e30e04",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\OptionsResolver\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony OptionsResolver Component",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "config",
+                "configuration",
+                "options"
+            ],
+            "time": "2020-01-04T14:08:26+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",

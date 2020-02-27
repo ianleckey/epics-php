@@ -1,7 +1,8 @@
 <?php 
 namespace Epics;
+use Epics\Image;
+use Epics\Cache;
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
 
 
@@ -9,31 +10,28 @@ class Team {
 	
 	protected static $endpoint = EPICS__API_ENDPOINT . 'teams';
 
-	protected $id;
-	protected $country;
-	protected $name;
-	protected $active;
+	public $id;
+	public $country;
+	public $name;
+	public $active;
 	protected $images;
-	protected $shortName;
-	protected $manager;
-	protected $dob;
+	public $shortName;
+	public $manager;
+	public $dob;
 	protected $playerIds;
 
 	public function __construct(int $id = 0) {
 		if($id > 0) {
-			if(EPICS__CACHING) {
-				$cache = new FilesystemAdapter('epics', 0, './cache/');
-				$teams = $cache->getItem('teams');
-				if(!$teams->isHit()) {
-					$teams->expiresAfter(EPICS__CACHE_EXPIRES);
-					$teams->set($this->getAllTeams());
-					$cache->save($teams);
-				}
-				
-				$allTeams = $teams->get();
-			} else {
-				$allTeams = $this->getAllTeams();
+
+			$cache = new Cache();
+			$teams = $cache->pool->getItem('teams');
+			if(!$teams->isHit()) {
+				$teams->expiresAfter($cache->expires);
+				$teams->set($this->getAllTeams());
+				$cache->pool->save($teams);
 			}
+			
+			$allTeams = $teams->get();
 
 			foreach($allTeams as $team) {
 				if($team['id'] === $id) {
@@ -42,21 +40,30 @@ class Team {
 					$this->name = $team['name'];
 					$this->active = $team['active'];
 					$this->shortName = $team['shortName'];
-					$this->images = $team['images'];
+					$this->images = $this->setImages($team['images']);
 					$this->manager = $team['manager'];
 					$this->dob = $team['dob'];
 					break;
 				}
 			}
+
 		}
+	}
+
+	private function setImages($images) {
+		$imagesArr = [];
+		foreach($images as $image) {
+			$imagesArr[] = new Image($image);
+		}
+		return $imagesArr;
 	}
 
 	public static function getAllTeams() {
 		
 		$client = HttpClient::create();
 		$headers = EPICS__HTTP_HEADERS;
-		$cache = new FilesystemAdapter('epics', 0, './cache/');
-		$headers['X-User-JWT'] = $cache->getItem('jwt')->get();
+		$cache = new Cache();
+		$headers['X-User-JWT'] = $cache->get('jwt');
 		$response = $client->request('GET', self::$endpoint, [ 
 						'headers' => $headers,
 						'query' => [
