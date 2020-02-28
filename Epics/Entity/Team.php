@@ -12,7 +12,6 @@ class Team extends Entity {
 
 	public $shortName;
 	public $manager;
-	protected $playerIds;
 
 	public function __construct(int $id = 0) {
 		if($id > 0) {
@@ -42,6 +41,17 @@ class Team extends Entity {
 			}
 
 		}
+	}
+
+	public function getPlayers() : array {
+		$playersArr = [];
+		$players = Player::getAllPlayers();
+		foreach ($players as $player) { 
+			if($player['playerFrames'][0]['teamId'] === $this->id) {
+				$playersArr[] = new Player($player['id']);
+			}
+		}
+		return $playersArr;
 	}
 
 	protected function setImages(array $images) : array {

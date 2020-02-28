@@ -18,6 +18,7 @@ class Player extends Entity {
 	protected $lastDate;
 	protected $videos;
 	protected $playerFrames;
+	protected $teamId;
 
 
 	public function __construct(int $id = 0) {
