@@ -16,7 +16,7 @@ $auth = new Epics\Auth('email', 'password');
 
 ## Teams
 
-The following properties are available in `Team` objects:
+The following properties are available in `Epics\Entity\Team` objects:
 
 | Property | Description |
 | --- | --- |
@@ -33,13 +33,53 @@ The following properties are available in `Team` objects:
 To get all teams, call the `getAllTeams()` static method of the Team class:
 
 ```php
-$teams = Epics\Team::getAllTeams();
+use Epics\Entity;
+$teams = Team::getAllTeams();
 ```
 
 To get a single team, pass the team ID into the Team class constructor:
 
 ```php
-$team = new Epics\Team(1);
+use Epics\Entity;
+$team = new Team(1);
 ```
 
-**Note:** `getAllTeams()` will return live, uncached data. Whereas (if caching is enabled), `new Epics\Team(1)` will return a team from the currently cached team data. Any time `getAlLTeams()` is called however, the local cache will be updated.
+**Note:** `getAllTeams()` will return live, uncached data. Whereas (if caching is enabled), `new Epics\Entity\Team(1)` will return a team from the currently cached team data. Any time `getAllTeams()` is called however, the local cache will be updated.
+
+To get an array of players for a team:
+
+```php
+use Epics\Entity;
+$team = new Team(1);
+$players = $team->getPlayers();
+```
+
+This will return an array of `Epics\Entity\Player` objects.
+
+## Players
+
+The following properties are availabe in `Epics\Entity\Player` objects:
+
+| Property | Description |
+| --- | --- |
+| id | (int) Epics team ID |
+| country | (string) ISO 3166-1 alpha-2 two character country code (lowercase) |
+| name | (string) Player name |
+| active | (boolean) |
+| images | (array) |
+| dob | (string) Player date of birth. YYYY-MM-DD |
+| age | |
+| gameId | (int) |
+| handle | (string) Player handle/nickname |
+| position | (string) Playing position of player, i.e. rifler |
+| frameType | |
+| lastDate | |
+| videos | (array) |
+| playerFrames | (array) |
+
+Aside from running `getPlayers()` on an `Epics\Entity\Team` object, you can get individual players by passing a player ID into the Player constructor:
+
+```php
+use Epics\Entity;
+$player = new Player(665);
+```
