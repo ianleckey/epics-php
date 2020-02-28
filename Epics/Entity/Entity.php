@@ -11,7 +11,7 @@ abstract class Entity {
 	public $country;
 	public $dob;
 
-	abstract protected function setImages(array $images);
+	abstract protected function setImages(array $images): array;
 
 }
 
