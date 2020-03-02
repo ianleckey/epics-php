@@ -1,12 +1,7 @@
 <?php
+declare(strict_types = 1);
 
 namespace Epics\Entity;
-use Epics\Image;
-use Epics\Cache;
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Contracts\Cache\ItemInterface;
-use Epics\Entity\Collection;
-
 
 class Collection extends Entity {
 

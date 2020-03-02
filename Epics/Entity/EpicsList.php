@@ -1,6 +1,8 @@
 <?php 
+declare(strict_types = 1);
 
 namespace Epics\Entity;
+
 use Symfony\Component\HttpClient\HttpClient;
 use Epics\Cache;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -9,7 +11,7 @@ class EpicsList {
 
 	protected $items;
 
-	public function __construct(bool $init = true, $cacheKey) {
+	public function __construct(bool $init = true, string $cacheKey) {
 		if($init) {
 			$cache = new Cache();
 			$items = $cache->pool->getItem( $cacheKey );
@@ -38,7 +40,14 @@ class EpicsList {
 	public function order(string $type, string $direction = 'asc') : self {
 		usort($this->items, function($a, $b) use ($type, $direction) {
 			if($direction == 'desc') {
+				if(is_int($b->{$type})) { 
+					return $b->{$type} > $a->{$type};
+				}
 				return strtolower($b->{$type}) > strtolower($a->{$type});
+			} else {
+				if(is_int($b->{$type})) { 
+					return $b->{$type} < $a->{$type};
+				}
 			}
 		    return strtolower($b->{$type}) < strtolower($a->{$type});
 		});

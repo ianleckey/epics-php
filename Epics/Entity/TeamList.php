@@ -1,9 +1,7 @@
 <?php
+declare(strict_types = 1);
 
 namespace Epics\Entity;
-use Epics\Cache;
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Contracts\Cache\ItemInterface;
 
 class TeamList extends EpicsList { 
 	
