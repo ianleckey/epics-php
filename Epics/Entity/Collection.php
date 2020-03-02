@@ -23,11 +23,9 @@ class Collection extends Entity {
 	protected $updated;
 
 	public function __construct(array $args) {
-		$this->id = $args['id'];
-		$this->name = $args['name'];
+		parent::__construct($args);
 		$this->visible = $args['visible'];
 		$this->beta = $args['beta'];
-		$this->images = $this->setImages($args['images']);
 		$this->groupTreatments = $args['groupTreatments'];
 		$this->created = $args['created'];
 		$this->updated = $args['updated'];
@@ -35,11 +33,5 @@ class Collection extends Entity {
 		return $this;
 	}
 
-	protected function setImages(array $images) : array {
-		$imagesArr = [];
-		foreach($images as $image) {
-			$imagesArr[] = new Image($image);
-		}
-		return $imagesArr;
-	}
+
 }

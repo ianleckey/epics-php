@@ -24,58 +24,21 @@ class Player extends Entity {
 	protected $teamId;
 
 
-	public function __construct(int $id = 0) {
-		if($id > 0) {
+	public function __construct(array $args) {
+		parent::__construct($args);
 
-			$cache = new Cache();
-			$players = $cache->pool->getItem('players');
-			if(!$players->isHit()) {
-				$players->set($this->getAllPlayers());
-				
-				$cache->pool->save($players);
-
-			}
-			
-			$allPlayers = $players->get();
-
-			foreach($allPlayers as $player) {
-				if($player['id'] === $id) {
-					$this->id = $id;
-					$this->name = $player['name'];
-					$this->age = $player['age'];
-					$this->dob = $player['dob'];
-					$this->country = $player['country'];
-					$this->gameId = $player['gameId'];
-					$this->handle = $player['handle'];
-					$this->position = $player['position'];
-					$this->frameType = $player['frameType'];
-					$this->lastDate = $player['lastDate'];
-					$this->active = $player['active'];
-					$this->images = $this->setImages($player['images']);
-					$this->videos = $this->setVideos($player['videos']);
-					$this->playerFrames = $this->setPlayerFrames($player['playerFrames']);
+		$this->age = $args['age'];
+		$this->dob = $args['dob'];
+		$this->country = $args['country'];
+		$this->gameId = $args['gameId'];
+		$this->handle = $args['handle'];
+		$this->position = $args['position'];
+		$this->frameType = $args['frameType'];
+		$this->lastDate = $args['lastDate'];
+		$this->active = $args['active'];
+		$this->videos = $this->setVideos($args['videos']);
+		$this->playerFrames = $this->setPlayerFrames($args['playerFrames']);
 					
-					break;
-				}
-			}
-
-		}
-	}
-
-	protected function setImages(array $images) : array {
-		$imagesArr = [];
-		foreach($images as $image) {
-			$imagesArr[] = new Image($image);
-		}
-		return $imagesArr;
-	}
-
-	protected function setVideos(array $videos) : array {
-		$videosArr = [];
-		foreach($videos as $video) {
-			$videosArr[] = new Video($video);
-		}
-		return $videosArr;
 	}
 
 	protected function setPlayerFrames(array $playerFrames) : array {
