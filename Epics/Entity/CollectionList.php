@@ -1,11 +1,9 @@
 <?php
+declare(strict_types = 1);
 
 namespace Epics\Entity;
 use Epics\Item\Card;
 use Epics\Item\CardTemplate;
-use Epics\Cache;
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Contracts\Cache\ItemInterface;
 
 class CollectionList extends EpicsList {
 

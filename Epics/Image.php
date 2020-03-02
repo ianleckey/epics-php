@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Epics;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -69,12 +70,14 @@ class Image {
 		return $resolver;
 	}
 
-	private function setId($id) {
+	private function setId($id) : int {
 		$this->id = (int)$id; 
+		return $this->id;
 	}
 
-	private function setUrl(string $url) {
+	private function setUrl(string $url) : string {
 		$this->url = self::$cdnUrl . $url;
+		return $this->url;
 	}
 
 }
