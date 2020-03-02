@@ -10,6 +10,9 @@ class Player extends Entity {
 	
 	protected static $endpoint = EPICS__API_ENDPOINT . 'players';
 
+	protected $active;
+	protected $country;
+	protected $dob;
 	protected $age;
 	protected $gameId;
 	protected $handle;

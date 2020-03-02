@@ -30,6 +30,8 @@ class Image {
        			$this->setId($value);
        		} else if($property === 'url') {
        			$this->setUrl($value);
+       		} else if $property === 'parent_type') {
+				$this->parentType = $value;
        		} else {
             	$this->{$property} = $value;
             }
@@ -41,6 +43,7 @@ class Image {
 		$resolver->setRequired([
 			'id',
 			'parentType',
+			'parent_type',
 			'parentId',
 			'name',
 			'position',

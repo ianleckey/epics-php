@@ -10,6 +10,9 @@ class Team extends Entity {
 	
 	public static $endpoint = EPICS__API_ENDPOINT . 'teams';
 
+	public $active;
+	public $country;
+	public $dob;
 	public $shortName;
 	public $manager;
 
