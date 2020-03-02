@@ -40,7 +40,14 @@ class EpicsList {
 	public function order(string $type, string $direction = 'asc') : self {
 		usort($this->items, function($a, $b) use ($type, $direction) {
 			if($direction == 'desc') {
+				if(is_int($b->{$type})) { 
+					return $b->{$type} > $a->{$type};
+				}
 				return strtolower($b->{$type}) > strtolower($a->{$type});
+			} else {
+				if(is_int($b->{$type})) { 
+					return $b->{$type} < $a->{$type};
+				}
 			}
 		    return strtolower($b->{$type}) < strtolower($a->{$type});
 		});
