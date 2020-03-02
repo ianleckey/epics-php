@@ -8,12 +8,12 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class Team extends Entity {
 	
-	protected static $endpoint = EPICS__API_ENDPOINT . 'teams';
+	public static $endpoint = EPICS__API_ENDPOINT . 'teams';
 
 	public $shortName;
 	public $manager;
 
-	public function __construct(int $id = 0) {
+	/*public function __construct(int $id = 0) {
 		if($id > 0) {
 
 			$cache = new Cache();
@@ -41,6 +41,18 @@ class Team extends Entity {
 			}
 
 		}
+	}*/
+
+	public function __construct(array $args) {
+		$this->id = $args['id'];
+		$this->country = $args['country'];
+		$this->name = $args['name'];
+		$this->active = $args['active'];
+		$this->shortName = $args['shortName'];
+		$this->images = $this->setImages($args['images']);
+		$this->manager = $args['manager'];
+		$this->dob = $args['dob'];
+		return $this;
 	}
 
 	public function getPlayers() : array {
