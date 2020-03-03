@@ -16,6 +16,23 @@ $auth = new Epics\Auth('email', 'password');
 
 ## Teams
 
+Utilise the `Epics\Entity\TeamList` class for getting teams:
+
+```php
+$teams = new TeamList(); /* will load all teams from cache or download fresh if expiry has not been hit */
+$myTeams = $teams->filter('country', 'se')->order('id', 'desc'); /* returns a Epics\Entity\TeamList object */
+$myTeams = $teams->result(); /* returns an array of Epics\Entity\Team objects */
+```
+
+Methods available for `Epics\Entity\TeamList` objects:
+
+| Method | Description |
+| --- | --- |
+| filter($property, $value | Allows filtering of teams by property value. I.e. `filter('country', 'de')` will return teams whose country is Germany. |
+| order($property, $direction) | Allows ordering of teams by property names, see below for a list of available properties. `asc` or `desc` |
+| count() | Will return the number of teams found for your query |
+| result() | Will return an array of `Epics\Entity\Team` objects |
+
 The following properties are available in `Epics\Entity\Team` objects:
 
 | Property | Description |
@@ -30,19 +47,6 @@ The following properties are available in `Epics\Entity\Team` objects:
 | dob | (string) Date the team was founded. YYYY-MM-DD |
 
 
-To get all teams, call the `getAllTeams()` static method of the Team class:
-
-```php
-use Epics\Entity;
-$teams = Team::getAllTeams();
-```
-
-To get a single team, pass the team ID into the Team class constructor:
-
-```php
-use Epics\Entity;
-$team = new Team(1);
-```
 
 **Note:** `getAllTeams()` will return live, uncached data. Whereas (if caching is enabled), `new Epics\Entity\Team(1)` will return a team from the currently cached team data. Any time `getAllTeams()` is called however, the local cache will be updated.
 

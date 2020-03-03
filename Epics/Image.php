@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Epics;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,6 +31,8 @@ class Image {
        			$this->setId($value);
        		} else if($property === 'url') {
        			$this->setUrl($value);
+       		} else if($property === 'parent_type') {
+				$this->parentType = $value;
        		} else {
             	$this->{$property} = $value;
             }
@@ -41,6 +44,7 @@ class Image {
 		$resolver->setRequired([
 			'id',
 			'parentType',
+			'parent_type',
 			'parentId',
 			'name',
 			'position',
@@ -51,6 +55,7 @@ class Image {
 		]);
 		$resolver->setAllowedTypes('id', ['int','string']);
 		$resolver->setAllowedTypes('parentType', 'string');
+		$resolver->setAllowedTypes('parent_type', 'string');
 		$resolver->setAllowedTypes('parentId', 'int');
 		$resolver->setAllowedTypes('name', 'string');
 		$resolver->setAllowedTypes('position', 'string');
@@ -58,16 +63,21 @@ class Image {
 		$resolver->setAllowedTypes('cardSide', 'string');
 		$resolver->setAllowedTypes('treatmentId', ['int','null']);
 		$resolver->setAllowedTypes('properties', ['array','null']);
+
+		$resolver->setDefault('parent_type', '');
+		$resolver->setDefault('parentType', '');
 		
 		return $resolver;
 	}
 
-	private function setId($id) {
+	private function setId($id) : int {
 		$this->id = (int)$id; 
+		return $this->id;
 	}
 
-	private function setUrl(string $url) {
+	private function setUrl(string $url) : string {
 		$this->url = self::$cdnUrl . $url;
+		return $this->url;
 	}
 
 }

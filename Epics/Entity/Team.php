@@ -1,4 +1,6 @@
 <?php 
+declare(strict_types = 1);
+
 namespace Epics\Entity;
 use Epics\Image;
 use Epics\Cache;
@@ -8,39 +10,23 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class Team extends Entity {
 	
-	protected static $endpoint = EPICS__API_ENDPOINT . 'teams';
+	public static $endpoint = EPICS__API_ENDPOINT . 'teams';
 
+	public $active;
+	public $country;
+	public $dob;
 	public $shortName;
 	public $manager;
 
-	public function __construct(int $id = 0) {
-		if($id > 0) {
 
-			$cache = new Cache();
-			$teams = $cache->pool->getItem('teams');
-
-			if(!$teams->isHit()) {
-				$teams->set($this->getAllTeams());
-				$cache->pool->save($teams);
-			}
-			
-			$allTeams = $teams->get();
-
-			foreach($allTeams as $team) {
-				if($team['id'] === $id) {
-					$this->id = $id;
-					$this->country = $team['country'];
-					$this->name = $team['name'];
-					$this->active = $team['active'];
-					$this->shortName = $team['shortName'];
-					$this->images = $this->setImages($team['images']);
-					$this->manager = $team['manager'];
-					$this->dob = $team['dob'];
-					break;
-				}
-			}
-
-		}
+	public function __construct(array $args) {
+		parent::__construct($args);
+		$this->country = $args['country'];
+		$this->active = $args['active'];
+		$this->shortName = $args['shortName'];
+		$this->manager = $args['manager'];
+		$this->dob = $args['dob'];
+		return $this;
 	}
 
 	public function getPlayers() : array {
@@ -54,13 +40,6 @@ class Team extends Entity {
 		return $playersArr;
 	}
 
-	protected function setImages(array $images) : array {
-		$imagesArr = [];
-		foreach($images as $image) {
-			$imagesArr[] = new Image($image);
-		}
-		return $imagesArr;
-	}
 
 	public static function getAllTeams() : array {
 		
