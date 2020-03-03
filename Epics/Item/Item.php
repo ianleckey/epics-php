@@ -1,14 +1,18 @@
 <?php 
 
 namespace Epics\Item;
+use Epics\Image;
 
-abstract class Item {
+class Item {
 
-	protected $id;
-	protected $uuid;
-	protected $image;
+	public $id;
+	public $uuid;
 
-	protected function setUuid(int $uuid) { }
+	public function __construct(array $args) {
+		$this->id = $args['id'];
+		$this->uuid = $args['uuid'];
+	}
+
 
 }
 

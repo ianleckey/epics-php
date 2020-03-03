@@ -1,4 +1,10 @@
 <?php 
+/**
+* @package Epics
+* @subpackage EpicsList
+*
+* @author Ian Leckey <ian.leckey@gmail.com>
+*/
 declare(strict_types = 1);
 
 namespace Epics\Entity;
@@ -27,6 +33,11 @@ class EpicsList {
 		}
 	}
 
+	/**
+	* @param string $type property to filter
+	* @param mixed $value 
+	* @return EpicsList
+	*/
 	public function filter(string $type, $value) : self {
 		$this->items = array_filter(
 		    $this->items,
@@ -37,6 +48,11 @@ class EpicsList {
 		return $this;
 	}
 
+	/**
+	* @param string $type
+	* @param string $direction
+	* @return EpicsList
+	*/
 	public function order(string $type, string $direction = 'asc') : self {
 		usort($this->items, function($a, $b) use ($type, $direction) {
 			if($direction == 'desc') {
@@ -67,7 +83,7 @@ class EpicsList {
 		$headers = EPICS__HTTP_HEADERS;
 		$cache = new Cache();
 		$headers['X-User-JWT'] = $cache->get('jwt');
-		$response = $client->request('GET', self::$endpoint, [ 
+		$response = $client->request('GET', $this->endpoint, [ 
 						'headers' => $headers,
 						'query' => [
 							'categoryId' => 1
