@@ -34,4 +34,8 @@ class CardTemplate extends Item {
 		$this->treatment = $treatment;
 	}
 
+	protected function getMarketListings() : MarketListingList {
+		return new MarketListingList($this->id);
+	}
+
 }
