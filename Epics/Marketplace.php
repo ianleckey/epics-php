@@ -9,28 +9,22 @@ class Marketplace {
 	protected static $endpointBuy = EPICS__API_ENDPOINT . 'buy';
 	protected static $endpointList = EPICS__API_ENDPOINT . 'list';
 
-	/*
-	{id: 73783915, price: "1", minOffer: null, type: "card"}
-	id: 73783915
-	price: "1"
-	minOffer: null
-	type: "card"
-
-	{"success":true,"data":{"marketId":2348340}}
-	*/
 	public static function list(int $cardId, int $price, $minOffer = null, string $type = 'card') {
 		$client = HttpClient::create();
 		$headers = EPICS__HTTP_HEADERS;
 		$cache = new Cache();
 		$headers['X-User-JWT'] = $cache->get('jwt');
-		/* POST
-		$response = $client->request('GET', self::$endpointList, [ 
+
+		$response = $client->request('POST', self::$endpointList . '?categoryId=1', [ 
 						'headers' => $headers,
-						'query' => [
-							'categoryId' => 1
+						'json' => [
+							'id' => $cardId,
+							'price' => $price,
+							'minOffer' => $minOffer,
+							'type' => $type
 						]
 					]);
-		*/
+
 		if($response->getStatusCode() == 200) {
 			$decodedPayload = $response->toArray();	
 			if($decodedPayload['success']) {
@@ -48,7 +42,7 @@ class Marketplace {
 
 	{"success":true}
 	*/
-	public static function buy(int $cardId) {
+	public static function buy(int $listingId) {
 
 	}
 

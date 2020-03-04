@@ -9,10 +9,15 @@ class Entity {
 	protected $images;
 
 
-	public function __construct(array $args) {
-		$this->id = $args['id'];
-		$this->name = $args['name'];
-		$this->images = $this->setImages($args['images']);
+	public function __construct(array $args = array()) {
+		$this->id = $args['id'] ?? 0;
+		$this->name = $args['name'] ?? '';
+		if(array_key_exists('images', $args)) {
+			$this->images = $this->setImages($args['images']);	
+		} else {
+			$this->images = array();
+		}
+		
 	}
 
 	protected function setImages(array $images) : array {

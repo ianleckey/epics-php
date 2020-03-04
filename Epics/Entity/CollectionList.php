@@ -2,16 +2,16 @@
 declare(strict_types = 1);
 
 namespace Epics\Entity;
-use Epics\Item\Card;
+use Epics\EpicsList;
 use Epics\Item\CardTemplate;
 
 class CollectionList extends EpicsList {
 
-	protected static $endpoint = EPICS__API_ENDPOINT . 'collections';
-	protected static $cacheKey = 'collections';
+	protected $endpoint = EPICS__API_ENDPOINT . 'collections';
+	protected $cacheKey = 'collections';
 
 	public function __construct(bool $init = true) {
-		parent::__construct($init, self::$cacheKey);
+		parent::__construct($init, $this->cacheKey);
 	}
 
 	public function add(array $item) : Collection {

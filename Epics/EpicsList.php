@@ -7,7 +7,7 @@
 */
 declare(strict_types = 1);
 
-namespace Epics\Entity;
+namespace Epics;
 
 use Symfony\Component\HttpClient\HttpClient;
 use Epics\Cache;
@@ -39,12 +39,14 @@ class EpicsList {
 	* @return EpicsList
 	*/
 	public function filter(string $type, $value) : self {
-		$this->items = array_filter(
-		    $this->items,
-		    function ($e) use ($type, &$value) {
-		        return $e->{$type} == $value;
-		    }
-		);
+		$this->items = array_values(
+							array_filter(
+									$this->items,
+							    function ($e) use ($type, &$value) {
+							        return $e->{$type} == $value;
+							    }
+							)
+						);
 		return $this;
 	}
 
@@ -68,6 +70,18 @@ class EpicsList {
 		    return strtolower($b->{$type}) < strtolower($a->{$type});
 		});
 		return $this;
+	}
+
+	public function first() {
+		if($this->count() > 0) {
+			return $this->items[0];
+		}
+	}
+
+	public function last() {
+		if($this->count() > 0) {
+			return $this->items[$this->count() - 1];
+		}
 	}
 
 	public function result() : array {
