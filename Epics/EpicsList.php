@@ -15,7 +15,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class EpicsList {
 
-	protected $items;
+	public $items;
 
 	public function __construct(bool $init = true, string $cacheKey) {
 		if($init) {

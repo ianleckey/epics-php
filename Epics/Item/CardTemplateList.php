@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Epics\Item;
 use Epics\EpicsList;
-use Epics\Entity\EpicsList;
 
 class CardTemplateList extends EpicsList { 
 	
