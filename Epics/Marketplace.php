@@ -35,13 +35,7 @@ class Marketplace {
 		return false;
 	}
 
-	/*
-	{marketId: 2323550, price: 1}
-	marketId: 2323550
-	price: 1
 
-	{"success":true}
-	*/
 	public static function buy(int $listingId, int $price) : bool {
 		$client = HttpClient::create();
 		$headers = EPICS__HTTP_HEADERS;
