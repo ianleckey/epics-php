@@ -2,7 +2,7 @@
 declare(strict_types = 1);
 
 namespace Epics\Item;
-use Epics\Entity\EpicsList;
+use Epics\EpicsList;
 
 class CardTemplateList extends EpicsList { 
 	
@@ -16,7 +16,6 @@ class CardTemplateList extends EpicsList {
 		parent::__construct($init, $this->cacheKey);
 
 	}
-
 
 	public function add(array $item) : CardTemplate {
 		$item = new CardTemplate($item);

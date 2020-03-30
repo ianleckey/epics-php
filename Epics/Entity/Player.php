@@ -9,7 +9,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class Player extends Entity {
 	
-	protected static $endpoint = EPICS__API_ENDPOINT . 'players';
+	//protected static $endpoint = EPICS__API_ENDPOINT . 'players';
 
 	protected $active;
 	protected $country;
@@ -51,6 +51,9 @@ class Player extends Entity {
 		return $playerFrames;
 	}
 
+	/**
+	* @deprecated
+	*/
 	public static function getAllPlayers() : array {
 		
 		$client = HttpClient::create();

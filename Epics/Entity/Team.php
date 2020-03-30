@@ -12,20 +12,22 @@ class Team extends Entity {
 	
 	public static $endpoint = EPICS__API_ENDPOINT . 'teams';
 
-	public $active;
+	protected $cacheKey = 'team_';
+
+	public $active = true;
 	public $country;
 	public $dob;
 	public $shortName;
 	public $manager;
 
 
-	public function __construct(array $args) {
+	public function __construct(array $args = array()) {
 		parent::__construct($args);
-		$this->country = $args['country'];
-		$this->active = $args['active'];
-		$this->shortName = $args['shortName'];
-		$this->manager = $args['manager'];
-		$this->dob = $args['dob'];
+		$this->country = $args['country'] ?? null;
+		$this->active = $args['active'] ?? true;
+		$this->shortName = $args['shortName'] ?? '';
+		$this->manager = $args['manager'] ?? 'N/A';
+		$this->dob = $args['dob'] ?? '01-01-1970';
 		return $this;
 	}
 

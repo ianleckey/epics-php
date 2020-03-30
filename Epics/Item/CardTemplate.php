@@ -4,7 +4,7 @@ namespace Epics\Item;
 
 class CardTemplate extends Item {
 	
-	protected $title;
+	public $title;
 	protected $cardType;
 	protected $categoryId = 1;
 	protected $treatmentId;
@@ -32,6 +32,14 @@ class CardTemplate extends Item {
 
 	protected function setTreatment(array $treatment) {
 		$this->treatment = $treatment;
+	}
+
+	protected function getMarketListings() : MarketListingList {
+		return new MarketListingList($this->id);
+	}
+
+	public function getCirculation() : int {
+		return $this->inCirculation;
 	}
 
 }
