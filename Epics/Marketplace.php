@@ -6,8 +6,8 @@ use Symfony\Component\HttpClient\HttpClient;
 
 class Marketplace {
 
-	protected static $endpointBuy = EPICS__API_ENDPOINT . 'buy';
-	protected static $endpointList = EPICS__API_ENDPOINT . 'list';
+	protected static $endpointBuy = EPICS__API_ENDPOINT . 'market/buy';
+	protected static $endpointList = EPICS__API_ENDPOINT . 'market/list';
 
 	public static function list(int $cardId, int $price, $minOffer = null, string $type = 'card') {
 		$client = HttpClient::create();
