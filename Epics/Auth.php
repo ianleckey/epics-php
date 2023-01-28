@@ -2,6 +2,7 @@
 
 namespace Epics;
 use Epics\Cache;
+use Epics\User;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -11,9 +12,9 @@ class Auth {
 
 	protected static $endpoint = EPICS__API_ENDPOINT . 'auth/login?categoryId=1&gameId=1';
 	
-	public $loggedIn;
+	public bool $loggedIn;
 
-	protected $user;	
+	protected User $user;	
 	protected $expires;
 
 	public function __construct(string $username = '', string $password = '', bool $forceNewJwt = false) {
