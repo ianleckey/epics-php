@@ -7,15 +7,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Image {
 	
-	protected $id;
-	protected $parentType;
-	protected $parentId;
-	public $name;
-	protected $position;
-	public $url;
-	public $cardSide;
-	protected $treatmentId;
-	protected $properties;
+	protected int $id;
+	protected string $parentType;
+	protected int $parentId;
+	public string $name;
+	protected string $position;
+	public string $url;
+	public string $cardSide;
+	protected int $treatmentId;
+	protected iterable $properties;
 
 	protected static $cdnUrl = 'https://cdn.epics.gg';
 
@@ -70,8 +70,8 @@ class Image {
 		return $resolver;
 	}
 
-	private function setId($id) : int {
-		$this->id = (int)$id; 
+	private function setId(int $id) : int {
+		$this->id = $id; 
 		return $this->id;
 	}
 
