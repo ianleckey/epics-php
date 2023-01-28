@@ -5,7 +5,7 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class Cache {
 	
-	public $pool;
+	public FilesystemAdapter $pool;
 	protected static $poolNamespace = 'epics';
 	protected static $poolDir = './cache/';
 	protected static $poolDefaultExpires = 86400;
@@ -14,7 +14,7 @@ class Cache {
 		$this->pool = new FilesystemAdapter(self::$poolNamespace, self::$poolDefaultExpires, self::$poolDir);
 	}
 	
-	public function clear($type = false) {
+	public function clear(bool $type = false) {
 
 		if($type) {
 			$this->pool->deleteItem($type);
@@ -26,7 +26,7 @@ class Cache {
 		
 	}
 
-	public function get($type) {
+	public function get(bool $type) {
 		
 		return $this->pool->getItem( $type )->get();
 
