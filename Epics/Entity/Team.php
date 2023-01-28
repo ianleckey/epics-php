@@ -12,13 +12,13 @@ class Team extends Entity {
 	
 	public static $endpoint = EPICS__API_ENDPOINT . 'teams';
 
-	protected $cacheKey = 'team_';
+	protected string $cacheKey = 'team_';
 
-	public $active = true;
-	public $country;
-	public $dob;
-	public $shortName;
-	public $manager;
+	public bool $active = true;
+	public string $country;
+	public string $dob;
+	public string $shortName;
+	public string $manager;
 
 
 	public function __construct(array $args = array()) {
