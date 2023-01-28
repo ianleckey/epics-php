@@ -3,10 +3,10 @@ namespace Epics;
 class User {
 
 
-	protected $id;
-	protected $firstName;
-	protected $lastName;
-	protected $userName;
+	protected int $id;
+	protected string $firstName;
+	protected string $lastName;
+	protected string $userName;
 	/*protected $email;
 	protected $balance;*/
 
